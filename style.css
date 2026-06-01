@@ -1,30 +1,170 @@
+
+```css id="starry-css"
+/* ==========================
+   STERNENHIMMEL
+========================== */
+
 body{
     margin:0;
     overflow:hidden;
-    font-family:Arial,sans-serif;
+    background:
+    radial-gradient(
+        circle at top,
+        #1b2735,
+        #090a0f 70%
+    );
 }
 
-#overlay{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
-    color:white;
-    z-index:100;
-}
+/* Funkelnde Sterne */
 
-h1{
-    font-size:5rem;
-    margin:0;
-}
+body::before{
+    content:"";
 
-p{
-    font-size:1.5rem;
-}
-
-canvas{
     position:fixed;
     top:0;
     left:0;
+
+    width:100%;
+    height:100%;
+
+    background-image:
+    radial-gradient(2px 2px at 20px 30px, white, transparent),
+    radial-gradient(2px 2px at 40px 70px, white, transparent),
+    radial-gradient(1px 1px at 90px 40px, white, transparent),
+    radial-gradient(2px 2px at 160px 120px, white, transparent),
+    radial-gradient(1px 1px at 200px 60px, white, transparent),
+    radial-gradient(2px 2px at 260px 150px, white, transparent);
+
+    background-size:300px 300px;
+
+    animation:
+    moveStars 120s linear infinite;
+
+    opacity:0.8;
+
+    z-index:-2;
 }
+
+/* Zweite Sternenschicht */
+
+body::after{
+    content:"";
+
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background-image:
+    radial-gradient(3px 3px at 80px 90px, white, transparent),
+    radial-gradient(2px 2px at 180px 190px, white, transparent),
+    radial-gradient(3px 3px at 250px 70px, white, transparent),
+    radial-gradient(2px 2px at 300px 150px, white, transparent);
+
+    background-size:400px 400px;
+
+    animation:
+    moveStars 200s linear infinite;
+
+    opacity:0.5;
+
+    z-index:-1;
+}
+
+@keyframes moveStars{
+
+    from{
+        transform:
+        translateY(0);
+    }
+
+    to{
+        transform:
+        translateY(-400px);
+    }
+
+}
+
+/* ==========================
+   TSCHICK TITEL
+========================== */
+
+#startscreen h1{
+
+    font-size:7rem;
+
+    color:white;
+
+    letter-spacing:12px;
+
+    text-shadow:
+    0 0 15px white,
+    0 0 30px #4da6ff,
+    0 0 60px #4da6ff;
+
+    animation:
+    glow 4s ease-in-out infinite;
+}
+
+@keyframes glow{
+
+    0%{
+        text-shadow:
+        0 0 10px white,
+        0 0 20px #4da6ff;
+    }
+
+    50%{
+        text-shadow:
+        0 0 25px white,
+        0 0 50px #4da6ff,
+        0 0 80px #4da6ff;
+    }
+
+    100%{
+        text-shadow:
+        0 0 10px white,
+        0 0 20px #4da6ff;
+    }
+
+}
+
+/* ==========================
+   STARTBUTTON
+========================== */
+
+#startBtn{
+
+    margin-top:25px;
+
+    padding:15px 40px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:white;
+
+    color:black;
+
+    font-size:1rem;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.4s;
+}
+
+#startBtn:hover{
+
+    transform:
+    scale(1.1);
+
+    box-shadow:
+    0 0 25px white;
+
+}
+```
