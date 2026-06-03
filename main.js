@@ -1,391 +1,293 @@
 ```javascript
 import * as THREE from "three";
 
-/* ==========================
-   GRUNDSZENE
-========================== */
+/* =====================================
+   TSCHICK - DIE REISE
+   CINEMATIC VERSION
+===================================== */
 
-const scene = new THREE.Scene();
-
-scene.fog = new THREE.Fog(
-    0x090a0f,
-    30,
-    200
-);
-
-/* ==========================
-   KAMERA
-========================== */
-
-const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
-
-camera.position.set(
-    0,
-    8,
-    20
-);
-
-/* ==========================
-   RENDERER
-========================== */
+const canvas =
+document.getElementById("bg");
 
 const renderer =
 new THREE.WebGLRenderer({
-
-    canvas:
-    document.getElementById("bg"),
-
-    antialias:true
-
+canvas,
+antialias:true
 });
 
 renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
+window.innerWidth,
+window.innerHeight
 );
 
 renderer.setPixelRatio(
-    window.devicePixelRatio
+window.devicePixelRatio
 );
 
-/* ==========================
-   LICHTER
-========================== */
+/* =====================================
+   SCENE
+===================================== */
+
+const scene =
+new THREE.Scene();
+
+scene.background =
+new THREE.Color(0x050510);
+
+scene.fog =
+new THREE.Fog(
+0x050510,
+40,
+300
+);
+
+/* =====================================
+   CAMERA
+===================================== */
+
+const camera =
+new THREE.PerspectiveCamera(
+70,
+window.innerWidth /
+window.innerHeight,
+0.1,
+1000
+);
+
+camera.position.set(
+0,
+8,
+25
+);
+
+/* =====================================
+   LIGHTS
+===================================== */
 
 const ambient =
 new THREE.AmbientLight(
-    0xffffff,
-    0.8
+0xffffff,
+1
 );
 
 scene.add(ambient);
 
 const moonLight =
 new THREE.DirectionalLight(
-    0xbfdfff,
-    2
+0xaaccff,
+2
 );
 
 moonLight.position.set(
-    30,
-    50,
-    10
+50,
+80,
+20
 );
 
 scene.add(moonLight);
 
-/* ==========================
-   MOND
-========================== */
+/* =====================================
+   MOON
+===================================== */
 
 const moon =
 new THREE.Mesh(
 
-    new THREE.SphereGeometry(
-        4,
-        32,
-        32
-    ),
+new THREE.SphereGeometry(
+5,
+32,
+32
+),
 
-    new THREE.MeshStandardMaterial({
+new THREE.MeshStandardMaterial({
 
-        color:0xf5f5f5,
+color:0xffffff,
 
-        emissive:0xdddddd,
+emissive:0xddddff,
 
-        emissiveIntensity:0.5
+emissiveIntensity:0.5
 
-    })
+})
 
 );
 
 moon.position.set(
-    -35,
-    40,
-    -80
+-60,
+60,
+-120
 );
 
 scene.add(moon);
 
-/* ==========================
-   STERNE
-========================== */
+/* =====================================
+   STARS
+===================================== */
 
 const stars = [];
 
-for(let i = 0; i < 1000; i++){
+for(let i=0;i<2000;i++){
 
-    const star =
-    new THREE.Mesh(
+const star =
+new THREE.Mesh(
 
-        new THREE.SphereGeometry(
-            0.08,
-            8,
-            8
-        ),
+new THREE.SphereGeometry(
+0.08,
+8,
+8
+),
 
-        new THREE.MeshBasicMaterial({
+new THREE.MeshBasicMaterial({
 
-            color:0xffffff
+color:0xffffff
 
-        })
+})
 
-    );
+);
 
-    star.position.set(
+star.position.set(
 
-        (Math.random()-0.5)*400,
+(Math.random()-0.5)*600,
 
-        Math.random()*200,
+Math.random()*250,
 
-        (Math.random()-0.5)*400
+(Math.random()-0.5)*600
 
-    );
+);
 
-    scene.add(star);
+scene.add(star);
 
-    stars.push(star);
+stars.push(star);
+
 }
 
-/* ==========================
-   BODEN
-========================== */
+/* =====================================
+   GROUND
+===================================== */
 
 const ground =
 new THREE.Mesh(
 
-    new THREE.PlaneGeometry(
-        500,
-        500
-    ),
+new THREE.PlaneGeometry(
+1000,
+1000
+),
 
-    new THREE.MeshStandardMaterial({
+new THREE.MeshStandardMaterial({
 
-        color:0x1f4d2c
+color:0x234d20
 
-    })
+})
 
 );
 
 ground.rotation.x =
--Math.PI / 2;
+-Math.PI/2;
 
 scene.add(ground);
 
-/* ==========================
+/* =====================================
    TATJANAS HAUS
-========================== */
+===================================== */
 
 const house =
 new THREE.Mesh(
 
-    new THREE.BoxGeometry(
-        10,
-        6,
-        10
-    ),
+new THREE.BoxGeometry(
+12,
+8,
+12
+),
 
-    new THREE.MeshStandardMaterial({
+new THREE.MeshStandardMaterial({
 
-        color:0xf2d2a9
+color:0xf0d8b0
 
-    })
+})
 
 );
 
-house.position.y = 3;
+house.position.y = 4;
 
 scene.add(house);
-
-/* DACH */
 
 const roof =
 new THREE.Mesh(
 
-    new THREE.ConeGeometry(
-        8,
-        4,
-        4
-    ),
+new THREE.ConeGeometry(
+9,
+5,
+4
+),
 
-    new THREE.MeshStandardMaterial({
+new THREE.MeshStandardMaterial({
 
-        color:0x8b0000
+color:0x8b0000
 
-    })
+})
 
 );
 
-roof.position.y = 8;
+roof.position.y = 10;
 
 roof.rotation.y =
-Math.PI / 4;
+Math.PI/4;
 
 scene.add(roof);
 
-/* ==========================
-   PARTYLICHTER
-========================== */
+/* =====================================
+   PARTY LIGHTS
+===================================== */
 
 const partyLights = [];
 
-for(let i = 0; i < 60; i++){
+for(let i=0;i<80;i++){
 
-    const light =
-    new THREE.Mesh(
+const light =
+new THREE.Mesh(
 
-        new THREE.SphereGeometry(
-            0.15
-        ),
+new THREE.SphereGeometry(
+0.15
+),
 
-        new THREE.MeshBasicMaterial({
+new THREE.MeshBasicMaterial({
 
-            color:
-            Math.random() > 0.5
-            ?
-            0xffff66
-            :
-            0xff66ff
+color:
+Math.random()>0.5
+?
+0xffff66
+:
+0xff66ff
 
-        })
+})
 
-    );
+);
 
-    light.position.set(
+light.position.set(
 
-        (Math.random()*12)-6,
+(Math.random()*14)-7,
 
-        Math.random()*4+4,
+Math.random()*5+5,
 
-        (Math.random()*12)-6
+(Math.random()*14)-7
 
-    );
+);
 
-    scene.add(light);
+scene.add(light);
 
-    partyLights.push(light);
+partyLights.push(light);
+
 }
 
-/* ==========================
-   MAIK
-========================== */
+ ```javascript
 
-const maik =
-new THREE.Group();
-
-const maikBody =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-1,
-2,
-0.8
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0x111111
-
-})
-
-);
-
-const maikHead =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-0.45
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xffd5b5
-
-})
-
-);
-
-maikHead.position.y = 1.5;
-
-maik.add(maikBody);
-maik.add(maikHead);
-
-maik.position.set(
-8,
-1,
-4
-);
-
-scene.add(maik);
-```
-```javascript id="tschick-lada"
-/* ==========================
-   TSCHICK
-========================== */
-
-const tschick =
-new THREE.Group();
-
-const tschickBody =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-1,
-2,
-0.8
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0x444444
-
-})
-
-);
-
-const tschickHead =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-0.45
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xffd5b5
-
-})
-
-);
-
-tschickHead.position.y = 1.5;
-
-tschick.add(tschickBody);
-tschick.add(tschickHead);
-
-tschick.position.set(
--25,
-1,
-0
-);
-
-scene.add(tschick);
-
-/* ==========================
+/* =====================================
    BLAUER LADA
-========================== */
+===================================== */
 
 const lada =
 new THREE.Group();
 
-/* Unterteil */
-
-const carBase =
+const carBody =
 new THREE.Mesh(
 
 new THREE.BoxGeometry(
@@ -402,11 +304,9 @@ color:0x3366ff
 
 );
 
-lada.add(carBase);
+lada.add(carBody);
 
-/* Dach */
-
-const roofPart =
+const carRoof =
 new THREE.Mesh(
 
 new THREE.BoxGeometry(
@@ -423,9 +323,9 @@ color:0x2255dd
 
 );
 
-roofPart.position.y = 0.8;
+carRoof.position.y = 0.8;
 
-lada.add(roofPart);
+lada.add(carRoof);
 
 /* Räder */
 
@@ -467,20 +367,20 @@ lada.add(wheel);
 }
 
 lada.position.set(
--25,
+-40,
 1,
 0
 );
 
 scene.add(lada);
 
-/* ==========================
+/* =====================================
    PARTYGÄSTE
-========================== */
+===================================== */
 
 const guests = [];
 
-for(let i=0;i<12;i++){
+for(let i=0;i<20;i++){
 
 const guest =
 new THREE.Group();
@@ -490,7 +390,7 @@ new THREE.Mesh(
 
 new THREE.BoxGeometry(
 0.8,
-1.6,
+1.7,
 0.6
 ),
 
@@ -512,7 +412,7 @@ new THREE.SphereGeometry(
 
 new THREE.MeshStandardMaterial({
 
-color:0xffd5b5
+color:0xffd4b5
 
 })
 
@@ -525,11 +425,11 @@ guest.add(head);
 
 guest.position.set(
 
-(Math.random()*12)-6,
+(Math.random()*16)-8,
 
 1,
 
-(Math.random()*12)-6
+(Math.random()*16)-8
 
 );
 
@@ -539,448 +439,51 @@ guests.push(guest);
 
 }
 
-/* ==========================
-   KAPITEL
-========================== */
+/* =====================================
+   STRASSE
+===================================== */
 
-const story = [
-
-{
-titel:"Tatjanas Party",
-text:"Maik steht allein vor dem Haus und beobachtet die Feier."
-},
-
-{
-titel:"Tschick erscheint",
-text:"Ein alter blauer Lada fährt langsam auf die Party zu."
-},
-
-{
-titel:"Ein ungewöhnlicher Freund",
-text:"Tschick spricht mit Maik. Eine unerwartete Freundschaft beginnt."
-},
-
-{
-titel:"Der gestohlene Wagen",
-text:"Der Lada gehört nicht Tschick. Das Abenteuer beginnt."
-},
-
-{
-titel:"Die Entscheidung",
-text:"Die beiden beschließen, einfach loszufahren."
-}
-
-];
-
-let currentScene = 0;
-
-/* ==========================
-   ANIMATION
-========================== */
-
-let time = 0;
-
-function animate(){
-
-requestAnimationFrame(
-animate
-);
-
-time++;
-
-/* Sterne funkeln */
-
-stars.forEach(star=>{
-
-star.scale.setScalar(
-
-1 +
-Math.sin(
-time*0.02 +
-star.position.x
-)
-*
-0.2
-
-);
-
-});
-
-/* Partylichter blinken */
-
-partyLights.forEach(light=>{
-
-light.scale.setScalar(
-
-1 +
-Math.sin(
-time*0.1
-)
-*
-0.3
-
-);
-
-});
-
-/* Gäste bewegen sich */
-
-guests.forEach((guest,index)=>{
-
-guest.rotation.y +=
-0.005;
-
-guest.position.y =
-1 +
-Math.sin(
-time*0.03 + index
-)
-*
-0.05;
-
-});
-
-/* Tschick fährt vor */
-
-if(time < 900){
-
-lada.position.x += 0.02;
-
-tschick.position.x += 0.02;
-
-}
-
-/* Maik schaut zum Auto */
-
-maik.rotation.y =
-
-Math.sin(
-time*0.01
-)
-*
-0.2;
-
-/* Kamera bewegt sich langsam */
-
-camera.position.x =
-
-Math.sin(
-time*0.002
-)
-*
-3;
-
-camera.lookAt(
-0,
-3,
-0
-);
-tschickWalk();
-
-maikWalk();
-
-startRoadTrip();
-
-driveAway();
-
-nightDrive();
-
-moveWorld();
-chapterRoadTrip();
-
-chapterFields();
-
-sunrise();
-
-roadCamera();
-
-renderer.render(
-scene,
-camera
-);
-
-}
-```javascript
-/* ==========================
-   FELDER
-========================== */
-
-const fields = [];
-
-for(let i = 0; i < 50; i++){
-
-const field =
+const road =
 new THREE.Mesh(
 
-new THREE.BoxGeometry(
-8,
-0.2,
-8
+new THREE.PlaneGeometry(
+12,
+1200
 ),
 
 new THREE.MeshStandardMaterial({
 
-color:
-Math.random() > 0.5
-?
-0x88cc44
-:
-0xd4b24c
+color:0x2b2b2b
 
 })
 
 );
 
-field.position.set(
+road.rotation.x =
+-Math.PI/2;
 
-Math.random() > 0.5
-?
-15 + Math.random()*40
-:
--15 - Math.random()*40,
+road.position.z =
+-500;
 
+road.position.y =
+0.01;
+
+scene.add(road);
+
+/* Mittellinien */
+
+for(let i=0;i<150;i++){
+
+const line =
+new THREE.Mesh(
+
+new THREE.BoxGeometry(
+0.3,
 0.1,
-
--Math.random()*500
-
-);
-
-scene.add(field);
-
-fields.push(field);
-
-}
-
-/* ==========================
-   DÖRFER
-========================== */
-
-const villages = [];
-
-for(let i = 0; i < 20; i++){
-
-const village =
-new THREE.Group();
-
-const house1 =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-3,
-3,
-3
+4
 ),
 
-new THREE.MeshStandardMaterial({
-
-color:0xf0d9b5
-
-})
-
-);
-
-house1.position.y = 1.5;
-
-village.add(house1);
-
-village.position.set(
-
-Math.random() > 0.5
-?
-20 + Math.random()*30
-:
--20 - Math.random()*30,
-
-0,
-
--100 - Math.random()*500
-
-);
-
-scene.add(village);
-
-villages.push(village);
-
-}
-
-/* ==========================
-   KAPITEL 6
-========================== */
-
-function chapterRoadTrip(){
-
-if(time > 3000){
-
-sceneTitle.innerHTML =
-"Landstraßen";
-
-chapterTitle.innerHTML =
-"Die Reise beginnt";
-
-chapterText.innerHTML =
-"Maik und Tschick fahren ohne Ziel durch Deutschland.";
-
-}
-
-}
-
-/* ==========================
-   KAPITEL 7
-========================== */
-
-function chapterFields(){
-
-if(time > 4500){
-
-sceneTitle.innerHTML =
-"Felder";
-
-chapterTitle.innerHTML =
-"Endlose Landschaft";
-
-chapterText.innerHTML =
-"Überall Felder, Wälder und kleine Dörfer.";
-
-}
-
-}
-
-/* ==========================
-   SONNENAUFGANG
-========================== */
-
-function sunrise(){
-
-if(time > 6000){
-
-scene.background =
-new THREE.Color(
-0xff9966
-);
-
-}
-
-}
-
-/* ==========================
-   KAMERAFLUG
-========================== */
-
-function roadCamera(){
-
-if(roadTrip){
-
-camera.position.y =
-
-8 +
-Math.sin(
-time*0.002
-)
-*
-2;
-
-}
-
-}
-```
-```javascript
-/* ==========================
-   ISA
-========================== */
-
-const isa =
-new THREE.Group();
-
-const isaBody =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-1,
-2,
-0.8
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xff6699
-
-})
-
-);
-
-const isaHead =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-0.45
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xffd5b5
-
-})
-
-);
-
-isaHead.position.y = 1.5;
-
-isa.add(isaBody);
-isa.add(isaHead);
-
-isa.position.set(
-50,
-1,
--250
-);
-
-scene.add(isa);
-
-/* ==========================
-   ISA KAPITEL
-========================== */
-
-function isaScene(){
-
-if(time > 8000){
-
-sceneTitle.innerHTML =
-"Isa";
-
-chapterTitle.innerHTML =
-"Eine ungewöhnliche Begegnung";
-
-chapterText.innerHTML =
-"Mitten auf ihrer Reise treffen Maik und Tschick Isa.";
-
-}
-
-if(time > 8000){
-
-isa.position.x -= 0.03;
-
-}
-
-}
-```
-```javascript
-/* ==========================
-   POLIZEIAUTO
-========================== */
-
-const policeCar =
-new THREE.Group();
-
-const policeBody =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-4,
-1,
-2
-),
-
-new THREE.MeshStandardMaterial({
+new THREE.MeshBasicMaterial({
 
 color:0xffffff
 
@@ -988,134 +491,21 @@ color:0xffffff
 
 );
 
-policeCar.add(policeBody);
-
-policeCar.position.set(
-40,
-1,
-lada.position.z - 50
+line.position.set(
+0,
+0.1,
+-i*8
 );
 
-scene.add(policeCar);
-
-/* ==========================
-   POLIZEI
-========================== */
-
-function policeScene(){
-
-if(time > 11000){
-
-sceneTitle.innerHTML =
-"Polizei";
-
-chapterTitle.innerHTML =
-"Verfolgung";
-
-chapterText.innerHTML =
-"Die Reise wird gefährlicher.";
-
-policeCar.position.x -= 0.06;
-
-}
+scene.add(line);
 
 }
 ```
+
 ```javascript
-/* ==========================
-   UNFALL
-========================== */
-
-let crashed = false;
-
-function crashScene(){
-
-if(time > 14000 && !crashed){
-
-crashed = true;
-
-sceneTitle.innerHTML =
-"Unfall";
-
-chapterTitle.innerHTML =
-"Das Ende der Fahrt";
-
-chapterText.innerHTML =
-"Der Lada verunglückt.";
-
-}
-
-if(crashed){
-
-lada.rotation.z += 0.01;
-
-lada.position.y +=
-Math.sin(time*0.05)*0.01;
-
-}
-
-}
-```
-```javascript
-/* ==========================
-   KRANKENHAUS
-========================== */
-
-function hospitalScene(){
-
-if(time > 17000){
-
-sceneTitle.innerHTML =
-"Krankenhaus";
-
-chapterTitle.innerHTML =
-"Nach dem Unfall";
-
-chapterText.innerHTML =
-"Die Reise ist vorbei.";
-
-}
-
-}
-
-/* ==========================
-   ENDE
-========================== */
-
-function endingScene(){
-
-if(time > 20000){
-
-sceneTitle.innerHTML =
-"Ende";
-
-chapterTitle.innerHTML =
-"Ein unvergesslicher Sommer";
-
-chapterText.innerHTML =
-"Maik kehrt nach Hause zurück. Die Reise hat ihn verändert.";
-
-}
-
-}
-```
-
-animate();
-
-isaScene();
-
-policeScene();
-
-crashScene();
-
-hospitalScene();
-
-endingScene();
-
-````javascript
-/* ==========================
-   STORY SYSTEM
-========================== */
+/* =====================================
+   STORY UI
+===================================== */
 
 const chapterTitle =
 document.getElementById(
@@ -1137,23 +527,88 @@ document.getElementById(
 "progressBar"
 );
 
-function updateStory(){
+const startBtn =
+document.getElementById(
+"startBtn"
+);
 
-chapterTitle.innerHTML =
-story[currentScene].titel;
+const startscreen =
+document.getElementById(
+"startscreen"
+);
 
-chapterText.innerHTML =
-story[currentScene].text;
+/* =====================================
+   STORY CHAPTERS
+===================================== */
 
-sceneTitle.innerHTML =
-story[currentScene].titel;
+const chapters = [
+
+{
+title:"Tatjanas Party",
+text:"Maik steht allein vor dem Haus und beobachtet die Feier."
+},
+
+{
+title:"Tschick erscheint",
+text:"Ein alter blauer Lada fährt langsam auf die Party zu."
+},
+
+{
+title:"Neue Freundschaft",
+text:"Tschick spricht mit Maik."
+},
+
+{
+title:"Die Reise beginnt",
+text:"Die beiden verlassen Berlin."
+},
+
+{
+title:"Landstraßen",
+text:"Sie fahren durch Felder und kleine Dörfer."
+},
+
+{
+title:"Isa",
+text:"Sie treffen Isa mitten im Nirgendwo."
+},
+
+{
+title:"Polizei",
+text:"Die Situation wird gefährlich."
+},
+
+{
+title:"Unfall",
+text:"Die Reise endet abrupt."
+},
+
+{
+title:"Ende",
+text:"Maik kehrt verändert nach Hause zurück."
+}
+
+];
+
+let chapter = 0;
+
+function updateChapter(){
+
+chapterTitle.textContent =
+chapters[chapter].title;
+
+chapterText.textContent =
+chapters[chapter].text;
+
+sceneTitle.textContent =
+chapters[chapter].title;
 
 progressBar.style.width =
 
 (
-(currentScene + 1)
+(chapter+1)
 /
-story.length
+chapters.length
 )
 *
 100
@@ -1162,218 +617,502 @@ story.length
 
 }
 
-/* ==========================
-   AUTOMATISCHE SZENEN
-========================== */
+/* =====================================
+   START BUTTON
+===================================== */
 
-setTimeout(()=>{
+let started = false;
 
-currentScene = 1;
-updateStory();
+startBtn.addEventListener(
+"click",
+()=>{
 
-},10000);
+started = true;
 
-setTimeout(()=>{
+startscreen.style.display =
+"none";
 
-currentScene = 2;
-updateStory();
+updateChapter();
 
-},20000);
+}
+);
 
-setTimeout(()=>{
+/* =====================================
+   STORY TIMER
+===================================== */
 
-currentScene = 3;
-updateStory();
+let storyTime = 0;
+```
 
-},30000);
+```javascript
+/* =====================================
+   STORY ANIMATION
+===================================== */
 
-setTimeout(()=>{
+function animateStory(){
 
-currentScene = 4;
-updateStory();
+if(!started) return;
 
-},40000);
+/* Zeit läuft */
 
-/* ==========================
-   DIALOGE
-========================== */
+storyTime++;
 
-const dialoge = [
+/* Kapitelwechsel */
 
-"Maik beobachtet die Party.",
+if(storyTime === 300){
+chapter = 1;
+updateChapter();
+}
 
-"Tschick fährt mit dem alten Lada vor.",
+if(storyTime === 700){
+chapter = 2;
+updateChapter();
+}
 
-"'Schönes Auto.'",
+if(storyTime === 1200){
+chapter = 3;
+updateChapter();
+}
 
-"'Hab ich mir ausgeliehen.'",
+if(storyTime === 1800){
+chapter = 4;
+updateChapter();
+}
 
-"Maik merkt schnell, dass etwas nicht stimmt.",
+if(storyTime === 2400){
+chapter = 5;
+updateChapter();
+}
 
-"Der Wagen ist gestohlen.",
+if(storyTime === 3000){
+chapter = 6;
+updateChapter();
+}
 
-"'Komm mit.'",
+if(storyTime === 3600){
+chapter = 7;
+updateChapter();
+}
 
-"'Wohin?'",
+if(storyTime === 4300){
+chapter = 8;
+updateChapter();
+}
 
-"'Egal. Einfach weg.'"
+/* =====================================
+   TSCHICK KOMMT AN
+===================================== */
 
-];
+if(storyTime < 600){
 
-let dialogIndex = 0;
-
-setInterval(()=>{
-
-if(dialogIndex <
-dialoge.length){
-
-chapterText.innerHTML =
-dialoge[dialogIndex];
-
-dialogIndex++;
+lada.position.x += 0.08;
+tschick.position.x += 0.08;
 
 }
 
-},5000);
+/* =====================================
+   PARTY ANIMATION
+===================================== */
 
-/* ==========================
-   TSCHICK STEIGT AUS
-========================== */
+partyLights.forEach(light=>{
 
-function tschickWalk(){
+light.scale.setScalar(
+
+1 +
+Math.sin(
+storyTime * 0.08
+) * 0.25
+
+);
+
+});
+
+guests.forEach((guest,index)=>{
+
+guest.rotation.y += 0.01;
+
+guest.position.y =
+
+1 +
+Math.sin(
+storyTime * 0.05 + index
+) * 0.08;
+
+});
+
+/* =====================================
+   TSCHICK & MAIK
+===================================== */
 
 if(
-time > 900 &&
-time < 1400
+storyTime > 700 &&
+storyTime < 1200
 ){
 
-tschick.position.x +=
-0.01;
-
-tschick.position.z +=
-0.005;
+tschick.position.x += 0.02;
 
 }
 
-}
-
-/* ==========================
-   MAIK GEHT MIT
-========================== */
-
-function maikWalk(){
-
-if(
-time > 1400 &&
-time < 2000
-){
-
-maik.position.x -=
-0.01;
-
-}
-
-}
-
-/* ==========================
+/* =====================================
    AUFBRUCH
-========================== */
+===================================== */
 
-let roadTrip = false;
+if(storyTime > 1200){
 
-function startRoadTrip(){
+lada.position.z -= 0.25;
 
-if(
-time > 2200
-){
-
-roadTrip = true;
-
-sceneTitle.innerHTML =
-"Die Reise beginnt";
+camera.position.z -= 0.12;
 
 }
 
-}
+/* Maik und Tschick sitzen im Auto */
 
-/* ==========================
-   AUTO FÄHRT LOS
-========================== */
+if(storyTime > 1200){
 
-function driveAway(){
+maik.position.copy(
+lada.position
+);
 
-if(roadTrip){
-
-lada.position.z -=
-0.15;
-
-tschick.position.z =
-lada.position.z;
-
-maik.position.z =
-lada.position.z;
-
-camera.position.z -=
-0.05;
-
-}
-
-}
-
-/* ==========================
-   NACHTFAHRT
-========================== */
-
-function nightDrive(){
-
-if(time > 2500){
-
-scene.background =
-new THREE.Color(
-0x050510
+tschick.position.copy(
+lada.position
 );
 
 }
 
-}
+/* =====================================
+   SONNENAUFGANG
+===================================== */
 
-/* ==========================
-   STRASSENBEWEGUNG
-========================== */
+if(storyTime > 1800){
 
-function moveWorld(){
-
-if(roadTrip){
-
-scene.children.forEach(
-(obj)=>{
-
-if(
-
-obj !== lada &&
-obj !== camera &&
-obj !== moon
-
-){
-
-if(obj.position){
-
-obj.position.z +=
-0.05;
+scene.background =
+new THREE.Color(
+0xffa366
+);
 
 }
 
-}
+/* =====================================
+   ISA
+===================================== */
+
+if(storyTime > 2400){
+
+if(!window.isaCreated){
+
+window.isaCreated = true;
+
+const isa =
+new THREE.Group();
+
+const body =
+new THREE.Mesh(
+
+new THREE.BoxGeometry(
+1,
+2,
+0.8
+),
+
+new THREE.MeshStandardMaterial({
+
+color:0xff66aa
+
+})
+
+);
+
+const head =
+new THREE.Mesh(
+
+new THREE.SphereGeometry(
+0.45
+),
+
+new THREE.MeshStandardMaterial({
+
+color:0xffd4b5
+
+})
+
+);
+
+head.position.y = 1.4;
+
+isa.add(body);
+isa.add(head);
+
+isa.position.set(
+10,
+1,
+lada.position.z - 40
+);
+
+scene.add(isa);
+
+window.isa = isa;
 
 }
+
+window.isa.rotation.y +=
+0.03;
+
+}
+
+/* =====================================
+   POLIZEI
+===================================== */
+
+if(storyTime > 3000){
+
+if(!window.policeCreated){
+
+window.policeCreated = true;
+
+const police =
+new THREE.Mesh(
+
+new THREE.BoxGeometry(
+4,
+1,
+2
+),
+
+new THREE.MeshStandardMaterial({
+
+color:0xffffff
+
+})
+
+);
+
+police.position.set(
+0,
+1,
+lada.position.z - 60
+);
+
+scene.add(police);
+
+window.police = police;
+
+}
+
+window.police.position.z +=
+0.2;
+
+}
+
+/* =====================================
+   UNFALL
+===================================== */
+
+if(storyTime > 3600){
+
+lada.rotation.z += 0.01;
+
+lada.position.y +=
+
+Math.sin(
+storyTime * 0.1
+) * 0.01;
+
+}
+
+/* =====================================
+   ENDE
+===================================== */
+
+if(storyTime > 4300){
+
+scene.background =
+new THREE.Color(
+0xffcc88
+);
+
+camera.position.y =
+
+10 +
+Math.sin(
+storyTime * 0.01
 );
 
 }
 
 }
 ```
-``
 
+/* =====================================
+   TSCHICK
+===================================== */
 
+const tschick =
+new THREE.Group();
 
+const tschickBody =
+new THREE.Mesh(
+
+new THREE.BoxGeometry(
+1,
+2,
+0.8
+),
+
+new THREE.MeshStandardMaterial({
+
+color:0x555555
+
+})
+
+);
+
+const tschickHead =
+new THREE.Mesh(
+
+new THREE.SphereGeometry(
+0.45
+),
+
+new THREE.MeshStandardMaterial({
+
+color:0xffd4b5
+
+})
+
+);
+
+tschickHead.position.y = 1.4;
+
+tschick.add(tschickBody);
+tschick.add(tschickHead);
+
+tschick.position.set(
+-40,
+1,
+0
+);
+
+scene.add(tschick);
+
+/* =====================================
+   MAIK
+===================================== */
+
+const maik =
+new THREE.Group();
+
+const maikBody =
+new THREE.Mesh(
+
+new THREE.BoxGeometry(
+1,
+2,
+0.8
+),
+
+new THREE.MeshStandardMaterial({
+
+color:0x111111
+
+})
+
+);
+
+const maikHead =
+new THREE.Mesh(
+
+new THREE.SphereGeometry(
+0.45
+),
+
+new THREE.MeshStandardMaterial({
+
+color:0xffd4b5
+
+})
+
+);
+
+maikHead.position.y = 1.4;
+
+maik.add(maikBody);
+
+```javascript
+function animate(){
+
+requestAnimationFrame(
+animate
+);
+
+/* Sterne funkeln */
+
+stars.forEach(star=>{
+
+star.scale.setScalar(
+
+1 +
+Math.sin(
+Date.now()*0.002 +
+star.position.x
+)
+*0.2
+
+);
+
+});
+
+/* Story */
+
+animateStory();
+
+/* Kamera */
+
+camera.lookAt(
+0,
+3,
+lada.position.z - 30
+);
+
+/* Rendern */
+
+renderer.render(
+scene,
+camera
+);
+
+}
+
+animate();
+
+/* Resize */
+
+window.addEventListener(
+"resize",
+()=>{
+
+camera.aspect =
+window.innerWidth /
+window.innerHeight;
+
+camera.updateProjectionMatrix();
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+}
+);
+```
+
+maik.add(maikHead);
+
+maik.position.set(
+8,
+1,
+4
+);
+
+scene.add(maik);
+```
 
