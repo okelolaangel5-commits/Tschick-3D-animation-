@@ -1,3 +1,5 @@
+
+```html
 <!DOCTYPE html>
 <html lang="de">
 
@@ -10,89 +12,213 @@
 
 <link rel="stylesheet" href="style.css">
 
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-  }
-}
-</script>
-
 </head>
 
 <body>
 
-<!-- ==========================
-     STARTSCREEN
-========================== -->
+<!-- MOND -->
 
-<div id="startscreen">
+<div class="moon"></div>
 
-    <h1>TSCHICK</h1>
+<!-- HERO -->
 
-    <h2>Eine interaktive 3D-Reise</h2>
+<section class="hero">
 
-    <p>
-        Begleite Maik und Tschick auf ihrer unvergesslichen Reise
-        von Tatjanas Party bis zum Ende der Sommerferien.
-    </p>
+<h1>TSCHICK</h1>
 
-    <button id="startBtn">
-        Reise starten
-    </button>
+<h2>Eine Reise. Ein gestohlenes Auto. Ein unvergesslicher Sommer.</h2>
+
+<p>
+Von Tatjanas Party bis zum Ende der Sommerferien.
+Eine cineastische Reise nach dem Roman von Wolfgang Herrndorf.
+</p>
+
+<button class="start-btn" onclick="startTrailer()">
+Trailer starten
+</button>
+
+</section>
+
+<!-- SZENE 1 -->
+
+<section class="scene">
+
+<div class="scene-content">
+
+<div class="scene-number">
+KAPITEL 01
+</div>
+
+<h2>Tatjanas Party</h2>
+
+<p class="quote">
+Maik Klingenberg.
+Vierzehn Jahre alt.
+Unsichtbar für die meisten Menschen.
+Während alle feiern,
+steht er allein am Rand.
+</p>
 
 </div>
 
-<!-- ==========================
-     UI
-========================== -->
+</section>
 
-<div id="ui">
+<!-- SZENE 2 -->
 
-    <!-- Fortschrittsbalken -->
+<section class="scene">
 
-    <div id="progressContainer">
+<div class="scene-content">
 
-        <div id="progressBar"></div>
+<div class="scene-number">
+KAPITEL 02
+</div>
 
-    </div>
+<h2>Tschick erscheint</h2>
 
-    <!-- Kapitelbox -->
-
-    <div id="chapterBox">
-
-        <h2 id="chapterTitle">
-            Tatjanas Party
-        </h2>
-
-        <p id="chapterText">
-            Maik steht allein vor Tatjanas Haus und beobachtet die Feier.
-        </p>
-
-    </div>
+<p class="quote">
+Dann taucht Tschick auf.
+Mit einem alten blauen Lada.
+Und plötzlich beginnt alles.
+</p>
 
 </div>
 
-<!-- ==========================
-     GROSSE SZENENÜBERSCHRIFT
-========================== -->
+</section>
 
-<div id="sceneTitle">
-    Tatjanas Party
+<!-- SZENE 3 -->
+
+<section class="scene">
+
+<div class="scene-content">
+
+<div class="scene-number">
+KAPITEL 03
 </div>
 
-<!-- ==========================
-     THREE.JS CANVAS
-========================== -->
+<h2>Der Aufbruch</h2>
 
-<canvas id="bg"></canvas>
+<p class="quote">
+Kein Führerschein.
+Kein Ziel.
+Kein Plan.
+Nur die Straße vor ihnen.
+</p>
 
-<!-- ==========================
-     JAVASCRIPT
-========================== -->
+</div>
 
-<script type="module" src="main.js"></script>
+</section>
+
+<!-- SZENE 4 -->
+
+<section class="scene">
+
+<div class="scene-content">
+
+<div class="scene-number">
+KAPITEL 04
+</div>
+
+<h2>Die Reise</h2>
+
+<p class="quote">
+Sie fahren durch Felder,
+kleine Dörfer
+und endlose Sommerlandschaften.
+Zum ersten Mal fühlen sie sich frei.
+</p>
+
+</div>
+
+</section>
+
+<!-- SZENE 5 -->
+
+<section class="scene">
+
+<div class="scene-content">
+
+<div class="scene-number">
+KAPITEL 05
+</div>
+
+<h2>Isa</h2>
+
+<p class="quote">
+Unterwegs treffen sie Menschen,
+die sie niemals vergessen werden.
+Allen voran:
+Isa.
+</p>
+
+</div>
+
+</section>
+
+<!-- SZENE 6 -->
+
+<section class="scene">
+
+<div class="scene-content">
+
+<div class="scene-number">
+KAPITEL 06
+</div>
+
+<h2>Die Polizei</h2>
+
+<p class="quote">
+Doch Freiheit hat ihren Preis.
+Und die Wirklichkeit
+holt sie langsam ein.
+</p>
+
+</div>
+
+</section>
+
+<!-- SZENE 7 -->
+
+<section class="scene">
+
+<div class="scene-content">
+
+<div class="scene-number">
+KAPITEL 07
+</div>
+
+<h2>Der Unfall</h2>
+
+<p class="quote">
+Jede Reise endet irgendwann.
+Manche abrupt.
+Manche verändern alles.
+</p>
+
+</div>
+
+</section>
+
+<!-- ENDE -->
+
+<section class="ending">
+
+<h2>TSCHICK</h2>
+
+<p>
+Manche Sommer vergisst man nie.
+</p>
+
+<br>
+
+<p>
+Nach dem Roman von Wolfgang Herrndorf
+</p>
+
+</section>
+
+<script src="main.js"></script>
 
 </body>
 
 </html>
+```
