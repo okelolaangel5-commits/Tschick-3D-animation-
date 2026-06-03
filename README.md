@@ -13,9 +13,9 @@
 
 <script type="importmap">
 {
-    "imports": {
-        "three":"https://unpkg.com/three@0.160.0/build/three.module.js"
-    }
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
 }
 </script>
 
@@ -23,7 +23,7 @@
 
 <body>
 
-<!-- STARTBILDSCHIRM -->
+<!-- STARTSEITE -->
 
 <div id="startscreen">
 
@@ -41,7 +41,7 @@
 
 </div>
 
-<!-- FORTSCHRITT -->
+<!-- UI -->
 
 <div id="ui">
 
@@ -54,32 +54,28 @@
     <div id="chapterBox">
 
         <h2 id="chapterTitle">
-
             Tatjanas Party
-
         </h2>
 
         <p id="chapterText">
-
             Maik steht allein vor Tatjanas Haus.
-
         </p>
 
     </div>
 
 </div>
 
-<!-- GROSSE KAPITELANZEIGE -->
+<!-- GROSSE SZENENÜBERSCHRIFT -->
 
 <div id="sceneTitle">
-
     Tatjanas Party
-
 </div>
 
-<!-- THREE JS -->
+<!-- 3D CANVAS -->
 
 <canvas id="bg"></canvas>
+
+<!-- JAVASCRIPT -->
 
 <script type="module" src="main.js"></script>
 
