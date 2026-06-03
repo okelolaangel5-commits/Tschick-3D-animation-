@@ -1,561 +1,352 @@
-import * as THREE from "three";
+/* =========================================
+   TSCHICK TRAILER
+========================================= */
 
-/* ==========================
-   BASIC SETUP
-========================== */
+const startButton =
+document.querySelector(".start-btn");
 
-const canvas = document.getElementById("bg");
+/* =========================================
+   START TRAILER
+========================================= */
 
-const renderer = new THREE.WebGLRenderer({
-    canvas,
-    antialias:true
+function startTrailer(){
+
+document.querySelectorAll(".scene")[0]
+.scrollIntoView({
+
+behavior:"smooth"
+
 });
 
-renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
+}
+
+window.startTrailer =
+startTrailer;
+
+/* =========================================
+   FADE-IN ANIMATION
+========================================= */
+
+const observer =
+new IntersectionObserver(
+
+(entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add(
+"visible"
 );
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x050510);
+}
 
-const camera = new THREE.PerspectiveCamera(
-    70,
-    window.innerWidth/window.innerHeight,
-    0.1,
-    1000
+});
+
+},
+
+{
+threshold:0.25
+}
+
 );
 
-camera.position.set(0,8,20);
+document
+.querySelectorAll(
+".scene, .ending"
+)
+.forEach(section=>{
 
-/* ==========================
-   LIGHTS
-========================== */
+section.style.opacity = "0";
+section.style.transform =
+"translateY(100px)";
+section.style.transition =
+"all 1.5s ease";
 
-const ambient =
-new THREE.AmbientLight(
-0xffffff,
-1.2
+observer.observe(section);
+
+});
+
+/* =========================================
+   VISIBILITY
+========================================= */
+
+const visibilityObserver =
+new MutationObserver(()=>{
+
+document
+.querySelectorAll(
+".visible"
+)
+.forEach(item=>{
+
+item.style.opacity = "1";
+
+item.style.transform =
+"translateY(0px)";
+
+});
+
+});
+
+visibilityObserver.observe(
+
+document.body,
+
+{
+attributes:true,
+subtree:true,
+attributeFilter:["class"]
+}
+
 );
 
-scene.add(ambient);
-
-const moonLight =
-new THREE.DirectionalLight(
-0xaaccff,
-2
-);
-
-moonLight.position.set(
-30,
-50,
-20
-);
-
-scene.add(moonLight);
-
-/* ==========================
-   MOON
-========================== */
+/* =========================================
+   MOON FLOATING EFFECT
+========================================= */
 
 const moon =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-4,
-32,
-32
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xffffff
-
-})
-
+document.querySelector(
+".moon"
 );
 
-moon.position.set(
--20,
-25,
--80
-);
+let moonTime = 0;
 
-scene.add(moon);
+function animateMoon(){
 
-/* ==========================
-   STARS
-========================== */
+moonTime += 0.01;
 
-const stars = [];
+moon.style.transform =
 
-for(let i=0;i<1000;i++){
-
-const star =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-0.08,
-8,
-8
-),
-
-new THREE.MeshBasicMaterial({
-
-color:0xffffff
-
-})
-
-);
-
-star.position.set(
-
-(Math.random()-0.5)*300,
-
-Math.random()*150,
-
-(Math.random()-0.5)*300
-
-);
-
-scene.add(star);
-
-stars.push(star);
-
-}
-
-/* ==========================
-   GROUND
-========================== */
-
-const ground =
-new THREE.Mesh(
-
-new THREE.PlaneGeometry(
-500,
-500
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0x2f5f2f
-
-})
-
-);
-
-ground.rotation.x =
--Math.PI/2;
-
-scene.add(ground);
-
-/* ==========================
-   HOUSE
-========================== */
-
-const house =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-10,
-6,
-10
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xf0d8b0
-
-})
-
-);
-
-house.position.y = 3;
-
-scene.add(house);
-
-/* ==========================
-   MAIK
-========================== */
-
-const maik =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-1,
-2,
-1
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0x222222
-
-})
-
-);
-
-maik.position.set(
-7,
-1,
-3
-);
-
-scene.add(maik);
-
-/* ==========================
-   TSCHICK
-========================== */
-
-const tschick =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-1,
-2,
-1
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0x666666
-
-})
-
-);
-
-tschick.position.set(
--20,
-1,
-0
-);
-
-scene.add(tschick);
-
-/* ==========================
-   LADA
-========================== */
-
-const lada =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-4,
-1.5,
-2
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0x3366ff
-
-})
-
-);
-
-lada.position.set(
--20,
-1,
-0
-);
-
-scene.add(lada);
-
-/* ==========================
-   UI
-========================== */
-
-const chapterTitle =
-document.getElementById(
-"chapterTitle"
-);
-
-const chapterText =
-document.getElementById(
-"chapterText"
-);
-
-const sceneTitle =
-document.getElementById(
-"sceneTitle"
-);
-
-const progressBar =
-document.getElementById(
-"progressBar"
-);
-
-const startBtn =
-document.getElementById(
-"startBtn"
-);
-
-const startscreen =
-document.getElementById(
-"startscreen"
-);
-
-/* ==========================
-   STORY
-========================== */
-
-const chapters = [
-
-["Tatjanas Party",
-"Maik steht allein auf der Party."],
-
-["Tschick erscheint",
-"Ein alter blauer Lada fährt vor."],
-
-["Die Reise",
-"Maik und Tschick fahren los."],
-
-["Isa",
-"Sie treffen Isa unterwegs."],
-
-["Polizei",
-"Die Polizei kommt näher."],
-
-["Unfall",
-"Der Lada verunglückt."],
-
-["Ende",
-"Die Reise verändert Maik."]
-
-];
-
-let chapter = 0;
-
-function updateChapter(){
-
-chapterTitle.textContent =
-chapters[chapter][0];
-
-chapterText.textContent =
-chapters[chapter][1];
-
-sceneTitle.textContent =
-chapters[chapter][0];
-
-progressBar.style.width =
-((chapter+1)/chapters.length)*100
-+ "%";
-
-}
-
-/* ==========================
-   START
-========================== */
-
-let started = false;
-
-startBtn.onclick = ()=>{
-
-started = true;
-
-startscreen.style.display =
-"none";
-
-updateChapter();
-
-};
-
-/* ==========================
-   ISA
-========================== */
-
-const isa =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-1,
-2,
-1
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xff66aa
-
-})
-
-);
-
-isa.position.set(
-30,
-1,
--80
-);
-
-scene.add(isa);
-
-/* ==========================
-   POLICE
-========================== */
-
-const police =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-4,
-1.5,
-2
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xffffff
-
-})
-
-);
-
-police.position.set(
-0,
-1,
--120
-);
-
-scene.add(police);
-
-/* ==========================
-   ANIMATION
-========================== */
-
-let time = 0;
-
-function animate(){
+`translateY(${
+Math.sin(moonTime)
+*15
+}px)`;
 
 requestAnimationFrame(
-animate
-);
-
-time++;
-
-stars.forEach(star=>{
-
-star.scale.setScalar(
-
-1 +
-Math.sin(
-time*0.02 +
-star.position.x
-)
-*0.2
-
-);
-
-});
-
-if(started){
-
-if(time === 300){
-chapter = 1;
-updateChapter();
-}
-
-if(time === 700){
-chapter = 2;
-updateChapter();
-}
-
-if(time === 1400){
-chapter = 3;
-updateChapter();
-}
-
-if(time === 2200){
-chapter = 4;
-updateChapter();
-}
-
-if(time === 3000){
-chapter = 5;
-updateChapter();
-}
-
-if(time === 3800){
-chapter = 6;
-updateChapter();
-}
-
-/* Tschick arrives */
-
-if(time < 600){
-
-lada.position.x += 0.04;
-tschick.position.x += 0.04;
-
-}
-
-/* Road trip */
-
-if(time > 700){
-
-lada.position.z -= 0.15;
-camera.position.z -= 0.05;
-
-}
-
-/* Isa */
-
-if(time > 1400){
-
-isa.rotation.y += 0.03;
-
-}
-
-/* Police */
-
-if(time > 2200){
-
-police.position.z += 0.1;
-
-}
-
-/* Crash */
-
-if(time > 3000){
-
-lada.rotation.z += 0.01;
-
-}
-
-}
-
-camera.lookAt(
-0,
-2,
-lada.position.z - 20
-);
-
-renderer.render(
-scene,
-camera
+animateMoon
 );
 
 }
 
-animate();
+animateMoon();
 
-/* ==========================
-   RESIZE
-========================== */
+/* =========================================
+   PARALLAX EFFECT
+========================================= */
 
 window.addEventListener(
-"resize",
+
+"scroll",
+
 ()=>{
 
-camera.aspect =
-window.innerWidth /
-window.innerHeight;
+const scrollY =
+window.scrollY;
 
-camera.updateProjectionMatrix();
+moon.style.transform =
 
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
+`translateY(${
+(scrollY * 0.15)
++
+Math.sin(moonTime)*15
+}px)`;
+
+}
+
+);
+
+/* =========================================
+   PARTICLES
+========================================= */
+
+for(let i=0;i<40;i++){
+
+const particle =
+document.createElement(
+"div"
+);
+
+particle.classList.add(
+"particle"
+);
+
+particle.style.left =
+Math.random()*100+"vw";
+
+particle.style.top =
+Math.random()*100+"vh";
+
+particle.style.animationDuration =
+
+10 +
+Math.random()*20
++
+"s";
+
+document.body.appendChild(
+particle
 );
 
 }
+
+/* =========================================
+   PARTICLE STYLE
+========================================= */
+
+const style =
+document.createElement(
+"style"
+);
+
+style.innerHTML =
+
+`
+
+.particle{
+
+position:fixed;
+
+width:3px;
+height:3px;
+
+background:white;
+
+border-radius:50%;
+
+opacity:.4;
+
+pointer-events:none;
+
+animation:
+floatParticle linear infinite;
+
+z-index:-1;
+
+}
+
+@keyframes floatParticle{
+
+from{
+
+transform:
+translateY(0);
+
+}
+
+to{
+
+transform:
+translateY(-120vh);
+
+}
+
+}
+
+`;
+
+document.head.appendChild(
+style
+);
+
+/* =========================================
+   AUTO TITLE GLOW
+========================================= */
+
+const title =
+document.querySelector(
+".hero h1"
+);
+
+let glow = 0;
+
+function animateTitle(){
+
+glow += 0.03;
+
+title.style.letterSpacing =
+
+`${14 +
+Math.sin(glow)*2}px`;
+
+requestAnimationFrame(
+animateTitle
+);
+
+}
+
+animateTitle();
+
+/* =========================================
+   CINEMATIC SCROLL HINT
+========================================= */
+
+const hint =
+document.createElement(
+"div"
+);
+
+hint.innerHTML =
+"↓";
+
+hint.style.position =
+"fixed";
+
+hint.style.bottom =
+"30px";
+
+hint.style.left =
+"50%";
+
+hint.style.transform =
+"translateX(-50%)";
+
+hint.style.fontSize =
+"2rem";
+
+hint.style.opacity =
+".6";
+
+hint.style.animation =
+"bounce 2s infinite";
+
+document.body.appendChild(
+hint);
+
+const bounceStyle =
+document.createElement(
+"style"
+);
+
+bounceStyle.innerHTML =
+
+`
+
+@keyframes bounce{
+
+0%{
+transform:
+translateX(-50%)
+translateY(0);
+}
+
+50%{
+transform:
+translateX(-50%)
+translateY(12px);
+}
+
+100%{
+transform:
+translateX(-50%)
+translateY(0);
+}
+
+}
+
+`;
+
+document.head.appendChild(
+bounceStyle
 );
